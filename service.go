@@ -49,7 +49,7 @@ func createRedisPool() *redis.Pool {
 }
 
 func main() {
-	log.Println("Starting service on port 8080")
+	log.Println("Starting service on port 80")
 
 	redisPool = createRedisPool()
 	defer redisPool.Close()
@@ -58,5 +58,5 @@ func main() {
 	initRedisContent()
 
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe("0.0.0.0:80", nil)
 }
