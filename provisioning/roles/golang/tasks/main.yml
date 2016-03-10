@@ -1,0 +1,24 @@
+---
+- name: add golang repository
+  apt_repository: repo='ppa:ubuntu-lxc/lxd-stable'
+
+
+- name: install (or update) golang
+  apt:
+    name: golang
+    state: latest
+    update_cache: yes
+  tags: golang
+
+- name: create go folder
+  file:
+      path=/home/vagrant/go
+      state=directory
+  tags: golang
+  
+- name: add go path settings in .bashrc
+  lineinfile: dest=/home/vagrant/.bashrc line="{{ item }}" insertafter=EOF
+  with_items:
+    - 'export GOPATH={{ go_path }}'
+    - 'export PATH={{ go_path }}/bin:$PATH'
+  tags: golang

@@ -1,0 +1,7 @@
+---
+- hosts: sample-ansible-app
+  roles:
+    - golang
+  remote_user: vagrant
+  sudo: yes
+
