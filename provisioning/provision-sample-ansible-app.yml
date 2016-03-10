@@ -2,6 +2,7 @@
 - hosts: sample-ansible-app
   roles:
     - golang
+    - redis
   remote_user: vagrant
   sudo: yes
 
