@@ -21,3 +21,5 @@ Install the following dependencies
 #### TODO
 
 - dockerize
+- make app binary run as linux service
+- add app variable flags
