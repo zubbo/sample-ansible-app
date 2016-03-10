@@ -11,11 +11,30 @@ import (
 var redisPool *redis.Pool
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<body> %s</body>", "This is a test")
+	content := getContent()
+	fmt.Fprintf(w, "<body>content: %s</body>", content)
 }
 
 func initRedisContent() {
+	conn := redisPool.Get()
+	defer conn.Close()
 
+	_, err := conn.Do("SET", "content", "this is some content")
+
+	if err != nil {
+		log.Println(err)
+	}
+}
+
+func getContent() string {
+	conn := redisPool.Get()
+	defer conn.Close()
+
+	result, err := redis.String(conn.Do("GET", "content"))
+	if err != nil {
+		log.Println(err)
+	}
+	return result
 }
 
 func createRedisPool() *redis.Pool {
@@ -30,10 +49,13 @@ func createRedisPool() *redis.Pool {
 }
 
 func main() {
-	log.Println("Starting service on port 80")
+	log.Println("Starting service on port 8080")
 
 	redisPool = createRedisPool()
 	defer redisPool.Close()
+
+	log.Println("Initiating content")
+	initRedisContent()
 
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)

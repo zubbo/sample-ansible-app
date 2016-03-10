@@ -1,0 +1,11 @@
+---
+- name: register the current git version (if any)
+  command: git --version
+  ignore_errors: yes
+  register: git_version
+  tags: git
+
+- name: be sure git is installed
+  apt: pkg=git state=present update_cache=no
+  when: git_version|failed
+  tags: git

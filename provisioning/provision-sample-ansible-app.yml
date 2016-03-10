@@ -1,6 +1,7 @@
 ---
 - hosts: sample-ansible-app
   roles:
+    - git
     - golang
     - redis
   remote_user: vagrant

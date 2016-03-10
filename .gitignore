@@ -1,3 +1,4 @@
 .vagrant
 sample-ansible-app
 vagrant
+app.log

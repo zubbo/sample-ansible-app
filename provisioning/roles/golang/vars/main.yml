@@ -1,4 +1,3 @@
 ---
 go_binary: /opt/go/bin/go
-go_path: /home/vagrant/go
-go_user: vagrant
+go_path: /opt/go

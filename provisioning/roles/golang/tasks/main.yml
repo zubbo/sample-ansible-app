@@ -12,13 +12,14 @@
 
 - name: create go folder
   file:
-      path=/home/vagrant/go
+      path=/opt/go mode=0775 owner=root group=vagrant
       state=directory
   tags: golang
   
-- name: add go path settings in .bashrc
-  lineinfile: dest=/home/vagrant/.bashrc line="{{ item }}" insertafter=EOF
+- name: add go path environment variables
+  lineinfile: dest=/etc/environment line="{{ item }}" insertafter=EOF
   with_items:
     - 'export GOPATH={{ go_path }}'
-    - 'export PATH={{ go_path }}/bin:$PATH'
+    - 'export GOBIN={{ go_path }}/bin'
+    - 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin"'
   tags: golang
